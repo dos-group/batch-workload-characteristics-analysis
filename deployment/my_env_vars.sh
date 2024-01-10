@@ -1,0 +1,11 @@
+export SSH_USERNAME=simexpuservm
+export SSH_ENDPOINT=hadoopcluster12312Berlin-ssh.azurehdinsight.net
+export STORAGE_ACCOUNT_NAME=simexpstorh0fh4tcr
+export STORAGE_ACCOUNT_KEY=+4d6lzjFKgfV0zVpULZu/1cQ1/nbhKQbwM2oSXZtQ8VLcEKq2mc2uyLBekHTOWBoloG0CVnouBso+AStmvDf2w==
+export CONTAINER_NAME=simexpcontainer
+export JAR_FILE_NAME=<your_jar_file_name>
+export SSH_USERNAME=simexpuservm
+export SSH_ENDPOINT=hadoopcluster12312Berlin-ssh.azurehdinsight.net
+export STORAGE_ACCOUNT_NAME=simexpstorn7bn9wka
+export STORAGE_ACCOUNT_KEY=0GiJ32y1OSBmTPyPgW/WUQRPyMDrajlrE5bL8rp1mH5OtRy3iNQh4qDFtJf7FrcGVZk4mTX5nFH++AStuKVbbQ==
+export CONTAINER_NAME=simexpcontainer

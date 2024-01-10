@@ -25,6 +25,13 @@ resource "azurerm_storage_container" "similarity_exp_container" {
   container_access_type = "private" # Access type set to private
 }
 
+## Password for admin dashboard
+resource "random_string" "ambari-password" {
+  length  = 12
+  special = true
+}
+
+
 # HDInsight Hadoop Cluster Configuration for Similarity Experiment
 resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
   name                = "hadoopcluster12312Berlin"
@@ -44,7 +51,7 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
   # Gateway configuration for the cluster
   gateway {
     username = "simexpusergw"
-    password = "yourSecure1Passw0rd!" # Replace with a secure password
+    password = "${random_string.ambari-password.result}" # Replace with a secure password
   }
 
   # Storage account configuration for the Hadoop cluster
