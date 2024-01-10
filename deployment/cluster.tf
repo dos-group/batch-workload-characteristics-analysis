@@ -35,6 +35,7 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
   cluster_version     = "4.0" # HDI cluster version -> 3.1.0
   # cluster_version     = "3.6"
   tier                = "Standard"
+  depends_on = [local_file.ssh_key_pub]
 
   component_version {
     hadoop = "3.1"
@@ -59,21 +60,21 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
     head_node {
       vm_size  = "Standard_A4_V2" # VM size for the head node
       username = "simexpuservm"
-      password = "yourOtherSecure1Passw0rd!" # Replace with a secure password
+      ssh_keys = [file("${path.module}/${local_file.ssh_key_pub.filename}")]
     }
 
     # Worker node configuration
     worker_node {
       vm_size               = "Standard_A2m_V2" # VM size for worker nodes
       username              = "simexpuservm"
-      password              = "yourOtherSecure1Passw0rd!" # Replace with a secure password
+      ssh_keys = [file("${path.module}/${local_file.ssh_key_pub.filename}")]
       target_instance_count = 1 # Number of worker nodes
     }
 
     zookeeper_node {
       vm_size  = "Standard_A1_V2"
       username = "simexpuservm"
-      password = "yourOtherSecure1Passw0rd!"
+      ssh_keys = [file("${path.module}/${local_file.ssh_key_pub.filename}")]
     }
   }
 }
