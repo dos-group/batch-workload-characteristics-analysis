@@ -13,6 +13,19 @@ resource "null_resource" "output_variables" {
     always_run = "${timestamp()}"
   }
 
+  # create a docker context for the cluster
+  provisioner "local-exec" {
+    command = <<EOT
+    chmod 600 ssh_key.pem
+    ln -sf ${path.module}/ssh_key.pem ~/.ssh/id_rsa
+    if docker context inspect cluster >/dev/null 2>&1; then
+      docker context rm cluster
+    fi
+    docker context create cluster --docker host=ssh://${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.roles[0].head_node[0].username}@${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.ssh_endpoint}
+    EOT
+  }
+
+  # create enviromental variables
   provisioner "local-exec" {
     command = <<EOT
     echo "" > my_env_vars.sh
