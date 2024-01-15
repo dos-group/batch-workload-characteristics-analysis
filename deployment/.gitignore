@@ -39,6 +39,8 @@ terraform.rc
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform
 
+**/linux_amd64/*
+
 # ignore ssh key:
 ssh_key.pem
 ssh_key.pub
