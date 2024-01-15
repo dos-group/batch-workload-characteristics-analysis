@@ -26,11 +26,15 @@ resource "azurerm_storage_container" "similarity_exp_container" {
 }
 
 ## Password for admin dashboard
-resource "random_string" "ambari-password" {
-  length  = 12
-  special = true
+resource "random_password" "ambari-password" {
+  length           = 12
+  special          = true
+  override_special = "_%@"
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
+  min_special      = 1
 }
-
 
 # HDInsight Hadoop Cluster Configuration for Similarity Experiment
 resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
@@ -42,7 +46,6 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
   cluster_version     = "4.0" # HDI cluster version -> 3.1.0
   # cluster_version     = "3.6"
   tier                = "Standard"
-  depends_on = [local_file.ssh_key_pub]
 
   component_version {
     hadoop = "3.1"
@@ -51,7 +54,7 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
   # Gateway configuration for the cluster
   gateway {
     username = "simexpusergw"
-    password = "${random_string.ambari-password.result}" # Replace with a secure password
+    password = "${random_password.ambari-password.result}" # Replace with a secure password
   }
 
   # Storage account configuration for the Hadoop cluster
@@ -67,21 +70,26 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
     head_node {
       vm_size  = "Standard_A4_V2" # VM size for the head node
       username = "simexpuservm"
-      ssh_keys = [file("${path.module}/${local_file.ssh_key_pub.filename}")]
+      ssh_keys = [local.ssh_public_key_content]
+
+      script_actions {
+        name  = "install-docker"
+        uri   = "https://raw.githubusercontent.com/Corgam/SS23_ADSP_TCF/main/deploy/setup.sh"
+      }
     }
 
     # Worker node configuration
     worker_node {
       vm_size               = "Standard_A2m_V2" # VM size for worker nodes
       username              = "simexpuservm"
-      ssh_keys = [file("${path.module}/${local_file.ssh_key_pub.filename}")]
+      ssh_keys = [local.ssh_public_key_content]
       target_instance_count = 1 # Number of worker nodes
     }
 
     zookeeper_node {
       vm_size  = "Standard_A1_V2"
       username = "simexpuservm"
-      ssh_keys = [file("${path.module}/${local_file.ssh_key_pub.filename}")]
+      ssh_keys = [local.ssh_public_key_content]
     }
   }
 }
