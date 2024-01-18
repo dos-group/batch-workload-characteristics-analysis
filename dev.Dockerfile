@@ -16,4 +16,4 @@ RUN apt-get update && apt-get install terraform
 #==============================
 # Install Make
 #==============================
-RUN apt-get update && apt-get install make
+RUN apt-get update && apt-get install -y make 
