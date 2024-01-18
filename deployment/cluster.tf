@@ -74,7 +74,7 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
 
       script_actions {
         name  = "install-docker"
-        uri   = "https://raw.githubusercontent.com/Corgam/SS23_ADSP_TCF/main/deploy/setup.sh"
+        uri = "https://raw.githubusercontent.com/guttenberger/Masterthesis/main/deployment/scripts/install-docker.sh"
       }
     }
 

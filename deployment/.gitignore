@@ -44,6 +44,3 @@ terraform.rc
 # ignore ssh key:
 ssh_key.pem
 ssh_key.pub
-
-# ignore generated tf env variables
-tf_env_vars.sh
