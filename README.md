@@ -7,38 +7,39 @@ Ensure you have [Docker Desktop 4.13.0](https://docs.docker.com/desktop/) or lat
 ## Getting Started
 ### Setting Up the Development Environment
 
-1. Create and Open Docker Development Environment
-
-create the development environment with:
+Start by creating your Docker development environment using the following command:
 ```bash
     docker dev create https://github.com/guttenberger/Masterthesis.git
 ```
-to find the name of your development environment, execute:
+
+To find the name of your newly created development environment, execute:
 ```bash
     docker dev list
 ```
-open the enviroment with
+
+Once you have identified your environment's name (DEV_ENVIRONMENT_NAME), open it with:
 ```bash
     docker dev open DEV_ENVIRONMENT_NAME
 ```
 
-2. Azure Authentication
+### Inside the IDE Terminal:
 
-login into azure with
+Authenticate with Azure using the command below:
 ```bash
     az login
 ```
-set subscription with:
+
+Specify the Azure subscription to use by replacing [SUBSCRIPTION ID] with your actual subscription ID:
 ```bash
     az account set --subscription [SUBSCRIPTION ID]
 ```
-confirm you selected subscription with:
+
+Verify the currently selected Azure subscription:
 ```bash
     az account list --query "[?isDefault]"
 ```
 
-3. Initialize Terraform with:
-
+Initialize Terraform with:
 ```bash
     make init
 ```
@@ -50,7 +51,7 @@ To deploy the cluster, execute the following command:
 ```
 To destroy the cluster and clean up resources, use:
 ```bash
-    make deploy
+    make destroy
 ```
 
 ## Makefile Commands
