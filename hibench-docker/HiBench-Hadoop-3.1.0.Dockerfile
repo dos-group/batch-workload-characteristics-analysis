@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y \
 
 # install python
 RUN apt-get install -y python${PYTHON_VERSION} python${PYTHON_VERSION}-dev
+RUN ln -s /usr/bin/python2.7 /usr/bin/python2
 
 #==============================
 # Java Installation
@@ -45,7 +46,6 @@ RUN \
 # Define commonly used JAVA_HOME variable
 ENV JAVA_HOME /usr/lib/jvm/java-${JDK_VERSION}-openjdk-amd64
 ENV PATH $PATH:$JAVA_HOME/bin
-
 
 #==============================
 # Maven Installation
@@ -88,8 +88,6 @@ RUN sed -i \
 # build hibench project
 RUN cd ${HIBENCH_HOME} && \
 mvn clean package -Dhadoop=${HADOOP_VERSION} -Dhive=${HIVE_VERSION}
-
-RUN ln -s /usr/bin/python2.7 /usr/bin/python2
 
 # environment variables for HADOOP
 ENV HADOOP_HOME /host
