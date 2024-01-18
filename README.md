@@ -2,34 +2,37 @@
 This repository contains the source code and documentation for my master thesis. It leverages Docker to ensure a consistent and reproducible development environment.
 
 ## Prerequisites
-Ensure you have Docker Desktop 4.13.0 or later installed on your system.
+Ensure you have [Docker Desktop 4.13.0](https://docs.docker.com/desktop/) or later installed on your system.
 
 ## Getting Started
 ### Setting Up the Development Environment
+
 1. Create and Open Docker Development Environment
-1.1. create the development environment with:
+
+create the development environment with:
 ```bash
     docker dev create https://github.com/guttenberger/Masterthesis.git
 ```
-1.2. To find the name of your development environment, execute:
+to find the name of your development environment, execute:
 ```bash
     docker dev list
 ```
-1.3 open the enviroment with
+open the enviroment with
 ```bash
     docker dev open DEV_ENVIRONMENT_NAME
 ```
 
 2. Azure Authentication
-2.1 login into azure with
+
+login into azure with
 ```bash
     az login
 ```
-2.2. set subscription with:
+set subscription with:
 ```bash
     az account set --subscription [SUBSCRIPTION ID]
 ```
-2.3. confirm you selected subscription with:
+confirm you selected subscription with:
 ```bash
     az account list --query "[?isDefault]"
 ```
