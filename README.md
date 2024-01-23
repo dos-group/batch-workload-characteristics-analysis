@@ -7,20 +7,9 @@ Ensure you have [Docker Desktop 4.13.0](https://docs.docker.com/desktop/) or lat
 ## Getting Started
 ### Setting Up the Development Environment
 
-Start by creating your Docker development environment using the following command:
-```bash
-    docker dev create https://github.com/guttenberger/Masterthesis.git
-```
+1. Create and Open Docker Development Environment
 
-To find the name of your newly created development environment, execute:
-```bash
-    docker dev list
-```
-
-Once you have identified your environment's name (DEV_ENVIRONMENT_NAME), open it with:
-```bash
-    docker dev open DEV_ENVIRONMENT_NAME
-```
+Click on this [link](https://open.docker.com/dashboard/dev-envs?url=https://github.com/guttenberger/Masterthesis), to create the dev environment and open the container shell with you ide
 
 ### Inside the IDE Terminal:
 
