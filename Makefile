@@ -31,8 +31,7 @@ destroy-force:
 # SSH COMMANDS
 
 ssh-connect:
-	ssh-keygen -f "/root/.ssh/known_hosts" -R $$SSH_ENDPOINT
-	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $$SSH_USERNAME@$$SSH_ENDPOINT
+	ssh $$SSH_USERNAME@$$SSH_ENDPOINT
 
 upload:
 	scp -r $(DIR) $$SSH_USERNAME@$$SSH_ENDPOINT:/home/$$SSH_USERNAME
