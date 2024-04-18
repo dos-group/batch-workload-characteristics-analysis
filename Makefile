@@ -25,7 +25,7 @@ destroy:
 	@cd deployment && terraform destroy
 
 destroy-force:
-	az group delete --name SimilarityExperimentRG --yes --no-wait 
+	az group delete --name SimilarityExperimentRG --yes
 	rm deployment/terraform.tfstate*
 
 # SSH COMMANDS
