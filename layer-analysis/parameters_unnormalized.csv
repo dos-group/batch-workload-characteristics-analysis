@@ -18,6 +18,7 @@ Layer,Property,Type,Count
 "JVM Layer","Garbage Collection Time","whitebox",1
 "JVM Layer","% Stack Traces and (JVM CPU time)","whitebox",1
 "Big Data Framework Layer","Workflow structure (e.g. Spark DAG)","whitebox",11
+"Big Data Framework Layer","Framework Parameter Configuration", "whitebox", 17
 "Big Data Framework Layer","Number of Tasks","whitebox",9
 "Big Data Framework Layer","Data Chunks Size","whitebox",2
 "Big Data Framework Layer","Number of Partitions","whitebox",3
@@ -33,11 +34,11 @@ Layer,Property,Type,Count
 "Data Layer","Data Input Size","blackbox",26
 "Data Layer","Data Output Size","whitebox",1
 "Data Layer","Input Data profiles (Size, Number of files, number of entries)","whitebox",1
-"User Application Layer","Workload Type and parameters","whitebox",3
-"User Application Layer","Input Parameters","whitebox",7
+"User Application Layer","Workload Type and parameters","blackbox",3
+"User Application Layer","Input Parameters","blackbox",7
 "User Application Layer","Application type (I/O Intensive, CPU Intensive)","whitebox",1
 "User Application Layer","Job Memory Requirement","whitebox",3
-"(Historical) Performance Layer","(Task) Startup and Cleanup Time","whitebox",3
+"(Historical) Performance Layer","(Task) Startup and Cleanup Time","blackbox",3
 "(Historical) Performance Layer","(Task) (Average or Total) Execution Time (for each stage)","blackbox",21
 "(Historical) Performance Layer","(Task) I/O Read Cost (Drive Demand)","blackbox",3
 "(Historical) Performance Layer","(Task) I/O Write Cost  (Drive Demand)","blackbox",3
