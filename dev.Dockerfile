@@ -17,3 +17,10 @@ RUN apt-get update && apt-get install terraform
 # Install Make
 #==============================
 RUN apt-get update && apt-get install -y make 
+
+#==============================
+# Install Python and dependencies
+#==============================
+RUN apt-get update && apt-get install -y python pip graphviz
+# RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+RUN pip install ipykernel jupyter matplotlib networkx scipy numpy seaborn
