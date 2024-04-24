@@ -1,6 +1,11 @@
-resource "azurerm_resource_group" "similarity_exp_rg" {
-  name     = "SimilarityExperimentRG" # Name of the resource group
-  location = "germanywestcentral" # Geographic location for the resources
+## use existing resource group instead
+# resource "azurerm_resource_group" "similarity_exp_rg" {
+#   name     = "SimilarityExperimentRG" # Name of the resource group
+#   location = "germanywestcentral" # Geographic location for the resources
+# }
+
+data "azurerm_resource_group" "similarity_exp_rg" {
+  name     = "AlexGuttenberger_Thesis" # Name of the resource group
 }
 
 ## Workaround for timeout bug when creating storage account
@@ -12,8 +17,11 @@ resource "random_string" "storage-suffix" {
 # Storage Account for Similarity Experiment
 resource "azurerm_storage_account" "similarity_exp_storage" {
   name                = "simexpstor${lower(random_string.storage-suffix.result)}" # workaround timeout bug
-  resource_group_name      = azurerm_resource_group.similarity_exp_rg.name
-  location                 = azurerm_resource_group.similarity_exp_rg.location
+  ## use existing resource group instead
+  # resource_group_name      = azurerm_resource_group.similarity_exp_rg.name
+  # location                 = azurerm_resource_group.similarity_exp_rg.location
+  resource_group_name      = data.azurerm_resource_group.similarity_exp_rg.name
+  location                 = data.azurerm_resource_group.similarity_exp_rg.location
   account_tier             = "Standard" # Defines the tier
   account_replication_type = "LRS"
 }
@@ -38,9 +46,12 @@ resource "random_password" "ambari-password" {
 
 # HDInsight Hadoop Cluster Configuration for Similarity Experiment
 resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
-  name                = "hadoopcluster12312Berlin"
-  resource_group_name = azurerm_resource_group.similarity_exp_rg.name
-  location            = azurerm_resource_group.similarity_exp_rg.location
+  name                = "hadoopcluster12312BerlinABC"
+  ## use exiting resource group instead
+  # resource_group_name = azurerm_resource_group.similarity_exp_rg.name
+  # location            = azurerm_resource_group.similarity_exp_rg.location
+  resource_group_name = data.azurerm_resource_group.similarity_exp_rg.name
+  location            = data.azurerm_resource_group.similarity_exp_rg.location
   ## Region abhängig
   # cluster_version     = "5.0" # HDI cluster version -> 3.3.4
   cluster_version     = "4.0" # HDI cluster version -> 3.1.0
