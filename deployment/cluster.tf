@@ -85,7 +85,12 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
 
       script_actions {
         name  = "install-docker"
-        uri = "https://raw.githubusercontent.com/guttenberger/Masterthesis/main/deployment/scripts/install-docker.sh"
+        uri = "https://raw.githubusercontent.com/guttenberger/Masterthesis/main/deployment/scripts/install-docker.sh?123131"
+      }
+
+      script_actions {
+        name  = "extract-hadoop-bins"
+        uri = "https://raw.githubusercontent.com/guttenberger/Masterthesis/main/deployment/scripts/extract-hadoop-bins.sh?123131"
       }
     }
 
