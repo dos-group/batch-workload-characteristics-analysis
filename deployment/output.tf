@@ -20,7 +20,8 @@ resource "null_resource" "output_variables" {
     ln -sf $(pwd)/ssh_key.pem ~/.ssh/id_rsa
     # add cluster to know_host
     ssh-keyscan -t ecdsa ${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.ssh_endpoint}  > tempkey && ssh-keygen -H -f tempkey && cat tempkey >> ~/.ssh/known_hosts && rm tempkey tempkey.old
-    ansible-playbook -i "${SSH_ENDPOINT}," -u ${SSH_USERNAME} /com.docker.devenvironments.code/hibench/setup-hibench.yml
+    # setup hibench
+    ansible-playbook -i "${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.ssh_endpoint}," -u ${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.roles[0].head_node[0].username} /com.docker.devenvironments.code/hibench/setup-hibench.yml
   }
 
   # create enviromental variables
