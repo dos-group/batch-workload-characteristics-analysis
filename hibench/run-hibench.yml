@@ -31,5 +31,5 @@
     - name: Copy results to local directory
       synchronize:
         src: "/root/HiBench/report"
-        dest: "/reports"
+        dest: "reports"
         mode: pull
