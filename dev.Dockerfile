@@ -24,3 +24,8 @@ RUN apt-get update && apt-get install -y make
 RUN apt-get update && apt-get install -y python pip graphviz
 # RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
 RUN pip install ipykernel jupyter matplotlib networkx scipy numpy seaborn
+
+#==============================
+# Install Ansible
+#==============================
+RUN sudo apt install ansible
