@@ -7,7 +7,7 @@ deploy:
 	@cd deployment && terraform apply
 
 submit:
-	ansible-playbook -i "${SSH_ENDPOINT}," -u ${SSH_USERNAME} hibench-docker/run-hibench.yml
+	ansible-playbook -i "${SSH_ENDPOINT}," -u ${SSH_USERNAME} hibench/run-hibench.yml
 
 destroy:
 	@cd deployment && terraform destroy
