@@ -20,11 +20,6 @@ resource "null_resource" "output_variables" {
     ln -sf $(pwd)/ssh_key.pem ~/.ssh/id_rsa
     # add cluster to know_host
     ssh-keyscan -t ecdsa ${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.ssh_endpoint}  > tempkey && ssh-keygen -H -f tempkey && cat tempkey >> ~/.ssh/known_hosts && rm tempkey tempkey.old
-    if docker context inspect cluster >/dev/null 2>&1; then
-      docker context rm cluster
-    fi
-    docker context create cluster --docker host=ssh://${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.roles[0].head_node[0].username}@${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.ssh_endpoint}
-    EOT
   }
 
   # create enviromental variables
