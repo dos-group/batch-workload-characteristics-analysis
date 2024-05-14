@@ -38,5 +38,7 @@ resource "null_resource" "output_variables" {
     echo "export STORAGE_ACCOUNT_KEY=${azurerm_storage_account.similarity_exp_storage.primary_access_key}" >> tf_env_vars.sh
     echo "export CONTAINER_NAME=${azurerm_storage_container.similarity_exp_container.name}" >> tf_env_vars.sh
     EOT
+
+    bash hibench/create-inventory.sh
   }
 }
