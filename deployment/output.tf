@@ -20,8 +20,7 @@ resource "null_resource" "output_variables" {
     ln -sf $(pwd)/ssh_key.pem ~/.ssh/id_rsa
     # add cluster to know_host
     ssh-keyscan -t ecdsa ${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.ssh_endpoint}  > tempkey && ssh-keygen -H -f tempkey && cat tempkey >> ~/.ssh/known_hosts && rm tempkey tempkey.old
-    # setup hibench
-    ansible-playbook -i "${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.ssh_endpoint}," -u ${azurerm_hdinsight_hadoop_cluster.similarity_exp_hadoop_cluster.roles[0].head_node[0].username} /com.docker.devenvironments.code/hibench/setup-hibench.yml
+    EOT
   }
 
   # create enviromental variables
@@ -38,7 +37,15 @@ resource "null_resource" "output_variables" {
     echo "export STORAGE_ACCOUNT_KEY=${azurerm_storage_account.similarity_exp_storage.primary_access_key}" >> tf_env_vars.sh
     echo "export CONTAINER_NAME=${azurerm_storage_container.similarity_exp_container.name}" >> tf_env_vars.sh
     EOT
+  }
 
-    bash hibench/create-inventory.sh
+  # prepare hibench
+  provisioner "local-exec" {
+    command = <<EOT
+      # create ansible inventory file
+      bash /com.docker.devenvironments.code/hibench/create-inventory.sh
+      # setup hibench
+      ansible-playbook -i /com.docker.devenvironments.code/hibench/hosts.ini /com.docker.devenvironments.code/hibench/setup-hibench.yml
+    EOT
   }
 }

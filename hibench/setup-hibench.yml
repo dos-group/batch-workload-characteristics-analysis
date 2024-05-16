@@ -1,13 +1,14 @@
 ---
-- name: Setup Ubuntu server
-  hosts: all
+- name: Setup head node server
+  hosts: head_node
   become: yes
   vars:
     jdk_version: 8
     python_version: "2.7"
     maven_version: "3.6.3"
     hadoop_version: "3.1"
-    hive_version: "3.0"
+    hive_version: "3.1.2"
+    spark_version: "2.4"
     hibench_home: "/root/HiBench"
     m2_home: "/usr/local/apache-maven"
     java_home: "/usr/lib/jvm/java-{{ jdk_version }}-openjdk-amd64"
@@ -137,6 +138,19 @@
             - { regexp: "aa953e0353ac104a22d314d15c88d78f", replace: "09b999fbee70c9853789ffbd8f28b8a3" }
 
         - name: Build HiBench project
-          shell: /usr/local/apache-maven/bin/mvn clean package -Dhadoop={{ hadoop_version }} -Dhive={{ hive_version }}
+          shell: /usr/local/apache-maven/bin/mvn clean package -Dhadoop={{ hadoop_version }} -Dhive={{ hive_version }} -Dspark={{ spark_version }}
           args:
             chdir: "{{ hibench_home }}"
+
+
+- name: Install sar
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install sysstat
+      apt:
+        name:
+          - sysstat
+        update_cache: yes
+        state: present
