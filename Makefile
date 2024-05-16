@@ -6,12 +6,6 @@ init:
 deploy:
 	@cd deployment && terraform apply
 
-submit:
-	ansible-playbook -i hibench/hosts.ini hibench/run-hibench.yml
-
-setup:
-	ansible-playbook -i hibench/hosts.ini hibench/setup-hibench.yml
-
 destroy:
 	@cd deployment && terraform destroy
 
@@ -25,13 +19,24 @@ destroy-force:
 	done
 	rm -f deployment/terraform.tfstate*
 
+# ANSIBLE COMMANDS
+
+submit:
+	ansible-playbook -i hibench/hosts.ini hibench/run-hibench.yml -vvvv
+
+setup:
+	ansible-playbook -i hibench/hosts.ini hibench/setup-hibench.yml
+
+ping:
+	ansible all -i hibench/hosts.ini -m ping
+
 # SSH COMMANDS
 
 ssh:
 	ssh $$SSH_USERNAME@$$SSH_ENDPOINT
 
 ssh-wn:
-	ssh -o ProxyCommand="ssh -W %h:%p $$SSH_USERNAME@$$SSH_ENDPOINT" $$SSH_USERNAME@wn0-hadoop.forekuw1vvputejd05mwkttwef.frax.internal.cloudapp.net
+	ssh -o ProxyCommand="ssh -W %h:%p $$SSH_USERNAME@$$SSH_ENDPOINT" $$SSH_USERNAME@wn0-hadoop.as3hslim2y2evcnseqdhpyy2ib.frax.internal.cloudapp.net
 
 upload:
 	scp -r $(DIR) $$SSH_USERNAME@$$SSH_ENDPOINT:/home/$$SSH_USERNAME
