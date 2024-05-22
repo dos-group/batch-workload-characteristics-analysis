@@ -22,7 +22,7 @@ destroy-force:
 # ANSIBLE COMMANDS
 
 submit:
-	ansible-playbook -i hibench/hosts.ini hibench/run-hibench.yml -vvvv
+	ansible-playbook -i hibench/hosts.ini hibench/run-hibench.yml
 
 setup:
 	ansible-playbook -i hibench/hosts.ini hibench/setup-hibench.yml
@@ -35,8 +35,8 @@ ping:
 ssh:
 	ssh $$SSH_USERNAME@$$SSH_ENDPOINT
 
-ssh-wn:
-	ssh -o ProxyCommand="ssh -W %h:%p $$SSH_USERNAME@$$SSH_ENDPOINT" $$SSH_USERNAME@wn0-hadoop.as3hslim2y2evcnseqdhpyy2ib.frax.internal.cloudapp.net
+ssh-wn0:
+	ssh -o ProxyCommand="ssh -W %h:%p $$SSH_USERNAME@$$SSH_ENDPOINT" $$SSH_USERNAME@$$WN0_ADDRESS
 
 upload:
 	scp -r $(DIR) $$SSH_USERNAME@$$SSH_ENDPOINT:/home/$$SSH_USERNAME
