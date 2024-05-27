@@ -3,8 +3,8 @@
   become: yes
   vars:
     hibench_home: "/root/HiBench"
-    monitoring_duration: 600  # Duration in seconds to monitor, adjust as needed
-    monitoring_interval: 5    # Interval in seconds between samples, adjust as needed
+    monitoring_duration: 600 # Duration in seconds to monitor, adjust as needed
+    monitoring_interval: 5 # Interval in seconds between samples, adjust as needed
 
   tasks:
     - name: Install prerequisites
@@ -17,12 +17,42 @@
 
     - name: Setup CPU Monitoring on Worker Nodes
       block:
-        - name: Start sysstat to collect CPU usage
-          shell: "sar -u {{ monitoring_interval }} > /tmp/cpu_usage_report.txt &"
-          async: "{{ monitoring_duration }}"
-          poll: 0
+        - name: Ensure /tmp/data directory exists
+          file:
+            path: /tmp/data
+            state: directory
           delegate_to: "{{ item }}"
-          loop: "{{ groups['worker_nodes'] }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+        - name: Start comprehensive system monitoring with sar
+          block:
+            - name: Start CPU monitoring
+              shell: sar -u {{ monitoring_interval }} > /tmp/data/cpu_usage_report.txt
+              async: "{{ monitoring_duration }}"
+              poll: 0
+              delegate_to: "{{ item }}"
+              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+            - name: Start memory monitoring
+              shell: sar -r {{ monitoring_interval }} > /tmp/data/memory_usage_report.txt
+              async: "{{ monitoring_duration }}"
+              poll: 0
+              delegate_to: "{{ item }}"
+              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+            - name: Start IO monitoring
+              shell: sar -b {{ monitoring_interval }} > /tmp/data/io_usage_report.txt
+              async: "{{ monitoring_duration }}"
+              poll: 0
+              delegate_to: "{{ item }}"
+              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+            - name: Start network monitoring
+              shell: sar -n DEV {{ monitoring_interval }} > /tmp/data/network_usage_report.txt
+              async: "{{ monitoring_duration }}"
+              poll: 0
+              delegate_to: "{{ item }}"
+              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
     - name: Configure HiBench
       block:
@@ -32,11 +62,11 @@
             dest: "{{ hibench_home }}/conf/{{ item.dest }}"
             owner: root
             group: root
-            mode: '0644'
+            mode: "0644"
           loop:
-            - { src: './conf/spark.conf', dest: 'spark.conf' }
-            - { src: './conf/hadoop.conf', dest: 'hadoop.conf' }
-            - { src: './conf/hibench.conf', dest: 'hibench.conf' }
+            - { src: "./conf/spark.conf", dest: "spark.conf" }
+            - { src: "./conf/hadoop.conf", dest: "hadoop.conf" }
+            - { src: "./conf/hibench.conf", dest: "hibench.conf" }
 
         - name: Set hdfs_master in hadoop.conf
           block:
@@ -69,15 +99,27 @@
 
     - name: Fetch and Remove CPU usage files from worker nodes
       block:
-        - name: Fetch CPU usage report
-          fetch:
-            src: "/tmp/cpu_usage_report.txt"
-            dest: "monitoring_data/{{ inventory_hostname }}_sar_output.txt"
+        - name: Ensure local directory exists for each node
+          local_action:
+            module: file
+            path: "/com.docker.devenvironments.code/hibench/monitoring_data/{{ item }}"
+            state: directory
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+        
+        - name: Synchronize CPU usage directory for each node
+          synchronize:
+            src: "{{ inventory_hostname }}:/tmp/data/"
+            dest: "/com.docker.devenvironments.code/hibench/monitoring_data/{{ inventory_hostname }}/"
+            mode: pull
+            delete: yes  # Optional: löscht Dateien im Zielverzeichnis, die nicht in der Quelle vorhanden sind
+            rsync_opts:
+              - "-e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\"ssh -W %h:%p -q simexpuservm@hadoopcluster12312BerlinABC-ssh.azurehdinsight.net\"'"
           delegate_to: "{{ item }}"
-          with_items: "{{ groups['worker_nodes'] }}"
-        - name: Remove CPU usage file
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+        - name: Remove CPU usage directory from each node
           file:
-            path: "/tmp/cpu_usage_report.txt"
+            path: "/tmp/data"
             state: absent
           delegate_to: "{{ item }}"
-          with_items: "{{ groups['worker_nodes'] }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
