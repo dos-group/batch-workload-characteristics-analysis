@@ -3,8 +3,9 @@
   become: yes
   vars:
     hibench_home: "/root/HiBench"
-    monitoring_duration: 600 # Duration in seconds to monitor, adjust as needed
+    async_delay: 600 # Duration in seconds to monitor, adjust as needed
     monitoring_interval: 5 # Interval in seconds between samples, adjust as needed
+    tmux_sar_session: "sar_monitoring"
 
   tasks:
     - name: Install prerequisites
@@ -15,7 +16,7 @@
             state: present
           when: ansible_os_family == "Debian"
 
-    - name: Setup CPU Monitoring on Worker Nodes
+    - name: Setup CPU Monitoring Nodes
       block:
         - name: Ensure /tmp/data directory exists
           file:
@@ -24,33 +25,17 @@
           delegate_to: "{{ item }}"
           loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
+        - name: Delete old system activity file if it exists
+          file:
+            path: /tmp/system_activity.bin
+            state: absent
+          delegate_to: "{{ item }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
         - name: Start comprehensive system monitoring with sar
           block:
-            - name: Start CPU monitoring
-              shell: sar -u {{ monitoring_interval }} > /tmp/data/cpu_usage_report.txt
-              async: "{{ monitoring_duration }}"
-              poll: 0
-              delegate_to: "{{ item }}"
-              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
-
-            - name: Start memory monitoring
-              shell: sar -r {{ monitoring_interval }} > /tmp/data/memory_usage_report.txt
-              async: "{{ monitoring_duration }}"
-              poll: 0
-              delegate_to: "{{ item }}"
-              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
-
-            - name: Start IO monitoring
-              shell: sar -b {{ monitoring_interval }} > /tmp/data/io_usage_report.txt
-              async: "{{ monitoring_duration }}"
-              poll: 0
-              delegate_to: "{{ item }}"
-              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
-
-            - name: Start network monitoring
-              shell: sar -n DEV {{ monitoring_interval }} > /tmp/data/network_usage_report.txt
-              async: "{{ monitoring_duration }}"
-              poll: 0
+            - name: Start async system monitoring
+              shell: tmux new-session -d -s {{ tmux_sar_session }} 'sar -o /tmp/system_activity.bin {{ monitoring_interval }}'
               delegate_to: "{{ item }}"
               loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
@@ -91,6 +76,11 @@
           retries: 3
           delay: 10
 
+        - name: Stop monitoring session
+          shell: tmux kill-session -t {{ tmux_sar_session }}
+          delegate_to: "{{ item }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
         - name: Copy benchmark results to local directory
           synchronize:
             src: "{{ hibench_home }}/report"
@@ -105,7 +95,27 @@
             path: "monitoring_data/{{ item }}"
             state: directory
           loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
-        
+
+        - name: Convert CPU usage report to CSV
+          shell: sadf -d /tmp/system_activity.bin -- -u > /tmp/data/cpu_usage_report.csv
+          delegate_to: "{{ item }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+        - name: Convert memory usage report to CSV
+          shell: sadf -d /tmp/system_activity.bin -- -r > /tmp/data/memory_usage_report.csv
+          delegate_to: "{{ item }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+        - name: Convert IO usage report to CSV
+          shell: sadf -d /tmp/system_activity.bin -- -b > /tmp/data/io_usage_report.csv
+          delegate_to: "{{ item }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+        - name: Convert network usage report to CSV
+          shell: sadf -d /tmp/system_activity.bin -- -n DEV > /tmp/data/network_usage_report.csv
+          delegate_to: "{{ item }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
         - name: Synchronize data from each node to localhost
           local_action:
             module: command
