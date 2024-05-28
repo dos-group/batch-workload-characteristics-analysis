@@ -3,9 +3,13 @@
   become: yes
   vars:
     hibench_home: "/root/HiBench"
-    async_delay: 600 # Duration in seconds to monitor, adjust as needed
-    monitoring_interval: 5 # Interval in seconds between samples, adjust as needed
+    monitoring_interval: 5 # Interval in seconds between samples
     tmux_sar_session: "sar_monitoring"
+
+  pre_tasks:
+    - name: Set local result directory
+      set_fact:
+        local_report_dir: "results/{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}"
 
   tasks:
     - name: Install prerequisites
@@ -13,6 +17,12 @@
         - name: Ensure sysstat is installed
           apt:
             name: sysstat
+            state: present
+          when: ansible_os_family == "Debian"
+
+        - name: Ensure tmux is installed
+          apt:
+            name: tmux
             state: present
           when: ansible_os_family == "Debian"
 
@@ -33,11 +43,9 @@
           loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
         - name: Start comprehensive system monitoring with sar
-          block:
-            - name: Start async system monitoring
-              shell: tmux new-session -d -s {{ tmux_sar_session }} 'sar -o /tmp/system_activity.bin {{ monitoring_interval }}'
-              delegate_to: "{{ item }}"
-              loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+          shell: tmux new-session -d -s {{ tmux_sar_session }} 'sar -o /tmp/system_activity.bin {{ monitoring_interval }}'
+          delegate_to: "{{ item }}"
+          loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
     - name: Configure HiBench
       block:
@@ -84,7 +92,7 @@
         - name: Copy benchmark results to local directory
           synchronize:
             src: "{{ hibench_home }}/report"
-            dest: "reports/{{ lookup('pipe', 'date +%Y%m%d-%H%M%S') }}"
+            dest: "{{ local_report_dir }}"
             mode: pull
 
     - name: Fetch and Remove CPU usage files from worker nodes
@@ -92,7 +100,7 @@
         - name: Ensure local directory exists for each node
           local_action:
             module: file
-            path: "monitoring_data/{{ item }}"
+            path: "{{ local_report_dir }}/monitoring_data/{{ item }}"
             state: directory
           loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
@@ -119,8 +127,7 @@
         - name: Synchronize data from each node to localhost
           local_action:
             module: command
-            cmd:
-              scp -r {{ ansible_user }}@{{ ansible_host }}:/tmp/data/ monitoring_data/{{ item }}/
+            cmd: scp {{ ansible_user }}@{{ ansible_host }}:/tmp/data/* {{ local_report_dir }}/monitoring_data/{{ item }}/
           loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
         - name: Remove CPU usage directory from each node
