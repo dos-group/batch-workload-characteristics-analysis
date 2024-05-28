@@ -102,19 +102,15 @@
         - name: Ensure local directory exists for each node
           local_action:
             module: file
-            path: "/com.docker.devenvironments.code/hibench/monitoring_data/{{ item }}"
+            path: "monitoring_data/{{ item }}"
             state: directory
           loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
         
-        - name: Synchronize CPU usage directory for each node
-          synchronize:
-            src: "{{ inventory_hostname }}:/tmp/data/"
-            dest: "/com.docker.devenvironments.code/hibench/monitoring_data/{{ inventory_hostname }}/"
-            mode: pull
-            delete: yes  # Optional: löscht Dateien im Zielverzeichnis, die nicht in der Quelle vorhanden sind
-            rsync_opts:
-              - "-e 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand=\"ssh -W %h:%p -q simexpuservm@hadoopcluster12312BerlinABC-ssh.azurehdinsight.net\"'"
-          delegate_to: "{{ item }}"
+        - name: Synchronize data from each node to localhost
+          local_action:
+            module: command
+            cmd:
+              scp -r {{ ansible_user }}@{{ ansible_host }}:/tmp/data/ monitoring_data/{{ item }}/
           loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
 
         - name: Remove CPU usage directory from each node

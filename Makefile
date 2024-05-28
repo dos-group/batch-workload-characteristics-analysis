@@ -36,7 +36,7 @@ ssh:
 	ssh $$SSH_USERNAME@$$SSH_ENDPOINT
 
 ssh-wn0:
-	ssh -o ProxyCommand="ssh -W %h:%p $$SSH_USERNAME@$$SSH_ENDPOINT" $$SSH_USERNAME@$$WN0_ADDRESS
+	ssh $$SSH_USERNAME@$$WN0_ADDRESS 
 
 upload:
 	scp -r $(DIR) $$SSH_USERNAME@$$SSH_ENDPOINT:/home/$$SSH_USERNAME

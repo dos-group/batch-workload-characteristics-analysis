@@ -1,39 +1,51 @@
 #!/bin/bash
 
+# Define the path where the Ansible playbook and other related files are stored.
 PLAYBOOK_PATH="/com.docker.devenvironments.code/hibench"
+GENERATED_ENV_VARS="/com.docker.devenvironments.code/deployment/tf_env_vars.sh"
+SSH_CONFIG_FILE="$HOME/.ssh/config"
 
-# Load environment variables from the file
-source deployment/tf_env_vars.sh
+# Load environment variables from a specific file.
+source $GENERATED_ENV_VARS
 
-# Create the head_node entry in the Ansible inventory
+# Create or update the head_node entry in the Ansible inventory.
 echo -e "[head_node]\nhead0 ansible_host=${SSH_ENDPOINT} ansible_user=${SSH_USERNAME}" > ${PLAYBOOK_PATH}/hosts.ini
 
-# SSH to the Head Node and get the list of Worker Nodes
-ssh ${SSH_USERNAME}@${SSH_ENDPOINT} 'yarn node -list' | \
+# Use SSH to connect to the Head Node and get the list of Worker Nodes, formatting the output as Ansible inventory lines.
+ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_ENDPOINT} 'yarn node -list' | \
 grep wn | \
 awk -v SSH_USERNAME="${SSH_USERNAME}" -v SSH_ENDPOINT="${SSH_ENDPOINT}" \
 'BEGIN {count=0} {split($1, a, ":"); print "worker" count " ansible_host="a[1]" ansible_user="SSH_USERNAME" ansible_ssh_common_args=\"-o ProxyCommand='\''ssh -W %h:%p -q "SSH_USERNAME"@"SSH_ENDPOINT"'\''\""; if (count == 0) {print a[1] > "wn0_address.tmp"} count++}' > workers.tmp
 
-# Extract the worker node hostnames
+# Extract the worker node hostnames to facilitate ssh-keyscan via the head node proxy.
 awk '{print $2}' workers.tmp | cut -d'=' -f2 > worker_hostnames.tmp
 
-# Add worker nodes to known_hosts via head node proxy
+# Add worker nodes to known_hosts to avoid SSH key verification prompts later.
 while read -r hostname; do
-    ssh ${SSH_USERNAME}@${SSH_ENDPOINT} "ssh-keyscan -t ecdsa ${hostname}" >> ~/.ssh/known_hosts
+    ssh -o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p -q ${SSH_USERNAME}@${SSH_ENDPOINT}" ${SSH_USERNAME}@${hostname} "exit" 2>&1 | grep -v "known hosts" | grep -v "Warning" > /dev/null
 done < worker_hostnames.tmp
 
-# Get the address of wn0 from the temporary file
+# Retrieve the address of the first worker node from the temporary file for later use.
 WN0_ADDRESS=$(cat wn0_address.tmp)
 rm wn0_address.tmp
 
-# Add the wn0 address to the environment variables file
-echo "export WN0_ADDRESS=${WN0_ADDRESS}" >> deployment/tf_env_vars.sh
+# Append the worker node address to the environment variables file for further deployment use.
+echo "export WN0_ADDRESS=${WN0_ADDRESS}" >> $GENERATED_ENV_VARS
 
-# Clean up temporary file
+# Clean up temporary files.
 rm worker_hostnames.tmp
 
-# Append the worker_nodes entries to the Ansible inventory
-echo "" >> ${PLAYBOOK_PATH}/hosts.ini
+# Append the dynamically generated worker_nodes entries to the Ansible inventory.
 echo "[worker_nodes]" >> ${PLAYBOOK_PATH}/hosts.ini
 cat workers.tmp >> ${PLAYBOOK_PATH}/hosts.ini
 rm workers.tmp
+
+# Remove existing configurations for worker nodes from the SSH config file
+sed -i '/^Host wn*/,/^$/d' $SSH_CONFIG_FILE
+
+# Update SSH config to use the head node as a proxy for worker nodes
+echo -e "\n# Proxy configuration for worker nodes" >> $SSH_CONFIG_FILE
+echo "Host wn*" >> $SSH_CONFIG_FILE
+echo "    ProxyCommand ssh -W %h:%p ${SSH_USERNAME}@${SSH_ENDPOINT}" >> $SSH_CONFIG_FILE
+echo "    StrictHostKeyChecking no" >> $SSH_CONFIG_FILE
+echo "    User ${SSH_USERNAME}" >> $SSH_CONFIG_FILE
