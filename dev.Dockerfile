@@ -28,4 +28,4 @@ RUN pip install ipykernel jupyter matplotlib networkx scipy numpy seaborn
 #==============================
 # Install Ansible
 #==============================
-RUN sudo apt install ansible
+RUN apt-get install -y ansible
