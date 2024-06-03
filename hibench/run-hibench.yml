@@ -9,7 +9,7 @@
   pre_tasks:
     - name: Set local result directory
       set_fact:
-        local_results_dir: "results/{{ lookup('pipe', \"date +'%Y-%m-%d_%H-%M-%S'\") }}"
+        local_results_dir: "results/{{ lookup('pipe', \"date +'%Y-%m-%d_%H-%M'\") }}"
 
   tasks:
     - name: Install prerequisites
@@ -79,8 +79,8 @@
 
         - name: Run wordcount benchmark
           command: >
-            {{ hibench_home }}/bin/workloads/micro/wordcount/prepare/prepare.sh 
-            {{ hibench_home }}/bin/workloads/micro/wordcount/hadoop/run.sh
+            {{ hibench_home }}/bin/workloads/micro/sort/prepare/prepare.sh 
+            {{ hibench_home }}/bin/workloads/micro/sort/hadoop/run.sh
           register: wordcount_result
           until: wordcount_result.rc == 0
           retries: 3
