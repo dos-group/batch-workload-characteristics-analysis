@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collections import Counter
 from itertools import combinations
+
 from database import data
 
 def count_tuples(data, tuple_length):
@@ -22,6 +23,6 @@ for tuple in most_common_three_tuples:
     print(tuple)
 
 # counting for 2-tuples
-most_common_two_tuples = count_tuples(data, 2)
-for tuple in most_common_two_tuples:
-    print(tuple)
+# most_common_two_tuples = count_tuples(data, 2)
+# for tuple in most_common_two_tuples:
+#     print(tuple)
