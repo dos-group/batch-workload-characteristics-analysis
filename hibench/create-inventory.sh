@@ -40,6 +40,12 @@ echo "[worker_nodes]" >> ${PLAYBOOK_PATH}/hosts.ini
 cat workers.tmp >> ${PLAYBOOK_PATH}/hosts.ini
 rm workers.tmp
 
+# Create the SSH config file if it doesn't exist
+if [ ! -f $SSH_CONFIG_FILE ]; then
+    mkdir -p $(dirname $SSH_CONFIG_FILE)
+    touch $SSH_CONFIG_FILE
+fi
+
 # Remove existing configurations for worker nodes from the SSH config file
 sed -i '/^Host wn*/,/^$/d' $SSH_CONFIG_FILE
 
