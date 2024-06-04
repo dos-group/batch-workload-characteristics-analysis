@@ -1,0 +1,26 @@
+- name: Push HiBench Configs
+  block:
+    - name: Copy local configuration files to HiBench conf directory
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ hibench_home }}/conf/{{ item.dest }}"
+        owner: root
+        group: root
+        mode: "0644"
+      loop:
+        - { src: "./conf/spark.conf", dest: "spark.conf" }
+        - { src: "./conf/hadoop.conf", dest: "hadoop.conf" }
+        - { src: "./conf/hibench.conf", dest: "hibench.conf" }
+
+    # Add azure storeage address to hibench config from core-site.xml
+    - name: Set hdfs_master in hadoop.conf
+      block:
+        - name: Read hdfs_master from core-site.xml
+          shell: grep '<name>fs.defaultFS</name>' /usr/hdp/current/hadoop-client/conf/core-site.xml -A1 | grep value | awk -F '>' '{print $2}' | awk -F '<' '{print $1}'
+          register: hdfs_master
+
+        - name: Replace value in hadoop.conf
+          lineinfile:
+            path: "{{ hibench_home }}/conf/hadoop.conf"
+            regexp: "^hibench.hdfs.master.*"
+            line: "hibench.hdfs.master    {{ hdfs_master.stdout }}"

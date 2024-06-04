@@ -22,7 +22,7 @@ destroy-force:
 # ANSIBLE COMMANDS
 
 submit:
-	ansible-playbook -i hibench/hosts.ini hibench/run-hibench.yml
+	ansible-playbook -i hibench/hosts.ini hibench/main.yml
 
 setup:
 	ansible-playbook -i hibench/hosts.ini hibench/setup-hibench.yml

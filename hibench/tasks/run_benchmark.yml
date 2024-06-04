@@ -1,0 +1,118 @@
+- name: Create parent directory for local results
+  local_action:
+    module: file
+    path: "{{ local_results_dir }}"
+    state: directory
+
+- name: Create directory for {{ benchmark_name }} results
+  local_action:
+    module: file
+    path: "{{ local_results_dir }}/{{ benchmark_name }}"
+    state: directory
+
+- name: Prepare monitoring
+  block:
+    - name: Ensure /tmp/data directory exists
+      file:
+        path: /tmp/data
+        state: directory
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Delete old system activity file if it exists
+      file:
+        path: /tmp/system_activity.bin
+        state: absent
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Run {{ benchmark_name }} prepare script
+      command: "{{ prepare_script }}"
+      register: prepare_result
+      until: prepare_result.rc == 0
+      retries: 3
+      delay: 10
+
+- name: Run and Monitor {{ benchmark_name }} benchmark
+  block:
+  - name: Ensure {{ benchmark_name }} system monitoring with sar and tmux
+    shell: |
+      tmux has-session -t {{ tmux_sar_session }} 2>/dev/null && tmux kill-session -t {{ tmux_sar_session }}
+      tmux new-session -d -s {{ tmux_sar_session }} 'sar -o /tmp/system_activity.bin {{ monitoring_interval }}'
+    delegate_to: "{{ item }}"
+    loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+  - name: Run {{ benchmark_name }} run script
+    command: "{{ run_script }}"
+    register: run_result
+    until: run_result.rc == 0
+    retries: 3
+    delay: 10
+
+  # Stop CPU monitoring on the nodes
+  - name: Stop monitoring session
+    shell: tmux kill-session -t {{ tmux_sar_session }}
+    delegate_to: "{{ item }}"
+    loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+# Download HiBench results from head node
+- name: Download {{ benchmark_name }} results from head node
+  block:
+    - name: Copy HiBench results to local directory
+      synchronize:
+        src: "{{ hibench_home }}/report"
+        dest: "{{ local_results_dir }}/{{ benchmark_name }}"
+        mode: pull
+
+    - name: Remove system usage directory from each node
+      file:
+        path: "{{ hibench_home }}/report"
+        state: absent
+
+# Download monitoring results from nodes
+- name: Download monitoring results from nodes
+  block:
+    - name: Ensure local directory exists for each node
+      local_action:
+        module: file
+        path: "{{ local_results_dir }}/{{ benchmark_name }}/monitoring_data/{{ item }}"
+        state: directory
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Convert CPU usage report to CSV
+      shell: sadf -d /tmp/system_activity.bin -- -u > /tmp/data/cpu_usage_report.csv
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Convert memory usage report to CSV
+      shell: sadf -d /tmp/system_activity.bin -- -r > /tmp/data/memory_usage_report.csv
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Convert IO usage report to CSV
+      shell: sadf -d /tmp/system_activity.bin -- -b > /tmp/data/io_usage_report.csv
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Convert network usage report to CSV
+      shell: sadf -d /tmp/system_activity.bin -- -n DEV > /tmp/data/network_usage_report.csv
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Synchronize data from each node to localhost
+      local_action:
+        module: command
+        cmd: scp {{ ansible_user }}@{{ ansible_host }}:/tmp/data/* {{ local_results_dir }}/{{ benchmark_name }}/monitoring_data/{{ item }}/
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Remove system usage directory from each node
+      file:
+        path: "/tmp/data"
+        state: absent
+      delegate_to: "{{ item }}"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+# Pause before running the next benchmark
+- name: Pause for a moment before the next benchmark
+  pause:
+    minutes: "{{ delay_between_benchmarks }}"

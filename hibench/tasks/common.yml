@@ -1,0 +1,15 @@
+- name: Install prerequisites
+  block:
+    - name: Ensure sysstat is installed
+      apt:
+        name: sysstat
+        state: present
+      when: ansible_os_family == "Debian"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
+
+    - name: Ensure tmux is installed
+      apt:
+        name: tmux
+        state: present
+      when: ansible_os_family == "Debian"
+      loop: "{{ groups['head_node'] + groups['worker_nodes'] }}"
