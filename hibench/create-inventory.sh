@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Define the path where the Ansible playbook and other related files are stored.
-PLAYBOOK_PATH="/com.docker.devenvironments.code/hibench"
-GENERATED_ENV_VARS="/com.docker.devenvironments.code/deployment/tf_env_vars.sh"
+PLAYBOOK_PATH="$PROJECT_HOME/hibench"
+GENERATED_ENV_VARS="$PROJECT_HOME/deployment/tf_env_vars.sh"
 SSH_CONFIG_FILE="$HOME/.ssh/config"
 
 # Load environment variables from a specific file.

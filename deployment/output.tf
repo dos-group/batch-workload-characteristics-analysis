@@ -42,10 +42,11 @@ resource "null_resource" "output_variables" {
   # prepare hibench
   provisioner "local-exec" {
     command = <<EOT
+      export PROJECT_HOME=../$PWD
       # create ansible inventory file
-      bash /com.docker.devenvironments.code/hibench/create-inventory.sh
+      bash $PROJECT_HOME/hibench/create-inventory.sh
       # setup hibench
-      ansible-playbook -i /com.docker.devenvironments.code/hibench/hosts.ini /com.docker.devenvironments.code/hibench/setup-hibench.yml
+      ansible-playbook -i $PROJECT_HOME/hibench/hosts.ini ../hibench/setup-hibench.yml
     EOT
   }
 }
