@@ -42,7 +42,8 @@ resource "null_resource" "output_variables" {
   # prepare hibench
   provisioner "local-exec" {
     command = <<EOT
-      export PROJECT_HOME=../$PWD
+      export PROJECT_HOME=$(dirname "$PWD")
+
       # create ansible inventory file
       bash $PROJECT_HOME/hibench/create-inventory.sh
       # setup hibench

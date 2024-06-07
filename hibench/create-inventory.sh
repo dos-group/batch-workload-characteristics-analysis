@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Define the path where the Ansible playbook and other related files are stored.
+PROJECT_HOME=$(dirname $PWD)
 PLAYBOOK_PATH="$PROJECT_HOME/hibench"
 GENERATED_ENV_VARS="$PROJECT_HOME/deployment/tf_env_vars.sh"
 SSH_CONFIG_FILE="$HOME/.ssh/config"
