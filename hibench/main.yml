@@ -20,13 +20,13 @@
         prepare_script: "{{ hibench_home }}/bin/workloads/sql/join/prepare/prepare.sh"
         run_script: "{{ hibench_home }}/bin/workloads/sql/join/hadoop/run.sh"
       - name: PageRank
-        prepare_script: "{{ hibench_home }}/bin/workloads/graph/pagerank/prepare/prepare.sh"
-        run_script: "{{ hibench_home }}/bin/workloads/graph/pagerank/spark/run.sh"
+        prepare_script: "{{ hibench_home }}/bin/workloads/websearch/pagerank/prepare/prepare.sh"
+        run_script: "{{ hibench_home }}/bin/workloads/websearch/pagerank/hadoop/run.sh"
 
   pre_tasks:
     - name: Set the timestamp for the result directory
       set_fact:
-        timestamp: "{{ lookup('pipe', \"date +'%Y-%m-%d_%H-%M'\") }}"
+        local_results_dir: "results/data/{{ lookup('pipe', \"date +'%Y-%m-%d_%H-%M'\") }}"
 
   tasks:
     # Include common tasks such as installing prerequisites
@@ -45,4 +45,3 @@
         benchmark_name: "{{ benchmark.name }}"
         prepare_script: "{{ benchmark.prepare_script }}"
         run_script: "{{ benchmark.run_script }}"
-        local_results_dir: "results/{{ timestamp }}"
