@@ -16,7 +16,7 @@
       - name: sort
         prepare_script: "{{ hibench_home }}/bin/workloads/micro/sort/prepare/prepare.sh"
         run_script: "{{ hibench_home }}/bin/workloads/micro/sort/hadoop/run.sh"
-      - name: SQL join
+      - name: SQL-join
         prepare_script: "{{ hibench_home }}/bin/workloads/sql/join/prepare/prepare.sh"
         run_script: "{{ hibench_home }}/bin/workloads/sql/join/hadoop/run.sh"
       - name: PageRank
