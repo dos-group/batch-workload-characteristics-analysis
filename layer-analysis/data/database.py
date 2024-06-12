@@ -5,7 +5,7 @@ from .helper_fns import count_tuples
 # Load the CSV file
 data = pd.read_csv('data/layers.csv')
 # Assign appropriate headers to the dataframe
-data.columns = ["Title", "Year", "Layers"]
+data.columns = ["Title", "Year", "Layers", "BibTex id", "Parameters"]
 
 two_tupel_combinations = count_tuples(data, 2)
 
