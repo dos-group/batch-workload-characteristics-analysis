@@ -1,0 +1,104 @@
+Parameter Name,Count,Citations,Layer
+(de)serialization time,4,"\cite{li_sparks_2018}, \cite{wang_performance_2015}, \cite{ataie_combined_2016}, \cite{xu_cost-effective_2019}",
+Start and Cleanup Time,3,"\cite{li_sparks_2018}, \cite{wang_performance_2015}, \cite{aseman-manzar_cost-aware_2022}",
+Number of Nodes,12,"\cite{ye_machine_2020}, \cite{shen_novel_2023}, \cite{myung_performance_2020}, \cite{li_sparks_2018}, \cite{wang_performance_2015}, \cite{krob_model-based_2017}, \cite{glushkova_mapreduce_2019}, \cite{li_marvelscaler_2022}, \cite{xu_ispot_2017}, \cite{ahmed_enhanced_2021}, \cite{chalvantzis_bbq_2017}, \cite{peyravi_estimating_2020}",Hardware Layer
+Number of CPU Cores per Node,6,"\cite{ye_machine_2020}, \cite{myung_performance_2020}, \cite{li_sparks_2018}, \cite{wang_performance_2015}, \cite{glushkova_mapreduce_2019}, \cite{peyravi_estimating_2020}",Hardware Layer
+Task I/O Read Cost,3,"\cite{wang_performance_2015}, \cite{kros_pertract_2019}, \cite{sewal_machine_2022}",
+Task I/O Write Cost,2,"\cite{wang_performance_2015}, \cite{sewal_machine_2022}",
+Task Memory Requirement,3,"\cite{wang_performance_2015}, \cite{wang_mapreduce_2018}, \cite{ahmed_enhanced_2021}",
+Number of Slots,5,"\cite{aseman-manzar_cost-aware_2022}, \cite{gianniti_fluid_2017}, \cite{lee_hadoop_2016}, \cite{shao_collaborative_2017}, \cite{peyravi_estimating_2020}",
+Number of CPU Cores,16,"\cite{alipourfard_cherrypick_nodate}, \cite{ataie_combined_2016}, \cite{scheinert_bellamy_2021}, \cite{verbitskiy_cobell_2018}, \cite{lee_hadoop_2016}, \cite{gulino_performance_2020}, \cite{thamsen_selecting_2016}, \cite{sewal_machine_2022}, \cite{shao_collaborative_2017}, \cite{ahmed_enhanced_2021}, \cite{rizzi_support_2016}, \cite{maros_machine_2019}, \cite{chen_d-simplexed_2019}, \cite{maroulis_fast_2019}, \cite{hu_balance_2020}, \cite{ataie_hybrid_2022}",Hardware Layer
+Memory Size,8,"\cite{scheinert_bellamy_2021}, \cite{verbitskiy_cobell_2018}, \cite{lee_hadoop_2016}, \cite{gulino_performance_2020}, \cite{thamsen_selecting_2016}, \cite{chen_d-simplexed_2019}, \cite{maroulis_fast_2019}, \cite{hu_balance_2020}",Hardware Layer
+Framework Parameter Configuration,18,"\cite{ramanathan_towards_2019}, \cite{cheng_efficient_2021}, \cite{shen_novel_2023}, \cite{cheng_tuning_2021}, \cite{yu_datasize-aware_2018}, \cite{glushkova_mapreduce_2019}, \cite{yeh_bigexplorer_2016}, \cite{chao_gray-box_2018}, \cite{li_phronesis_2022}, \cite{gu_auto-tuning_2018}, \cite{jie_performance_2022}, \cite{luo_performance_2016}, \cite{maros_machine_2019}, \cite{islam_dspark_2017}, \cite{hu_balance_2020}, \cite{peyravi_estimating_2020}, \cite{ahmed_parallelization_2021}",Big Data Framework Layer
+Job parameters,2,"\cite{shen_novel_2023}, \cite{scheinert_bellamy_2021}",
+Application Type,1,\cite{shen_novel_2023},
+Data Input Size,26,"\cite{ramanathan_towards_2019}, \cite{ye_machine_2020}, \cite{yu_datasize-aware_2018}, \cite{verbitskiy_cobell_2018}, \cite{xu_ispot_2017}, \cite{maros_machine_2019}, \cite{hu_balance_2020}, \cite{xu_cost-effective_2019}, \cite{cheng_efficient_2021}, \cite{shen_novel_2023}, \cite{ataie_combined_2016}, \cite{scheinert_bellamy_2021}, \cite{chao_gray-box_2018}, \cite{thamsen_selecting_2016}, \cite{shao_collaborative_2017}, \cite{chen_d-simplexed_2019}, \cite{peyravi_estimating_2020}, \cite{amannejad_fast_2019}, \cite{myung_performance_2020}, \cite{li_sparks_2018}, \cite{maroulis_fast_2019}, \cite{gandomi_designing_2020}, \cite{scheinert_enel_2021}, \cite{rizzi_support_2016}, \cite{chalvantzis_bbq_2017}",Data Layer
+Job History,1,\cite{yeh_bigexplorer_2016},
+System Logs,1,\cite{yeh_bigexplorer_2016},
+Workload Type,6,"\cite{scheinert_bellamy_2021}, \cite{yeh_bigexplorer_2016}, \cite{jie_performance_2022}, \cite{scheinert_enel_2021}, \cite{myung_machine-learning_2021}, \cite{islam_dspark_2017}",User Application Layer
+Historical Execution Time,17,"\cite{aseman-manzar_cost-aware_2022}, \cite{ataie_combined_2016}, \cite{amannejad_fast_2019}, \cite{shen_novel_2023}, \cite{verbitskiy_cobell_2018}, \cite{yeh_bigexplorer_2016}, \cite{sewal_machine_2022}, \cite{gu_auto-tuning_2018}, \cite{xu_ispot_2017}, \cite{rizzi_support_2016}, \cite{maros_machine_2019}, \cite{li_cross-domain_2020}, \cite{maroulis_fast_2019}, \cite{ataie_hybrid_2022}, \cite{liu_estimation_2016}",
+Input Parameters,6,"\cite{verbitskiy_cobell_2018}, \cite{krob_model-based_2017}, \cite{gulino_performance_2020}, \cite{thamsen_selecting_2016}, \cite{scheinert_enel_2021}, \cite{zaouk_neural-based_2021}",User Application Layer
+Basic information on previously executed jobs,2,"\cite{thamsen_selecting_2016}, \cite{verbitskiy_cobell_2018}",
+CPU Utilisation - CPU Time,2,"\cite{thamsen_continuously_2016}, \cite{kros_pertract_2019}",
+Available Resources,4,"\cite{thamsen_ellis_2017}, \cite{thamsen_continuously_2016}, \cite{karimian-aliabadi_fixed-point_2023}, \cite{ahmed_parallelization_2021}",Big Data Framework Layer
+Sensable Lower Bound Ressource Utilisation,1,\cite{thamsen_continuously_2016},
+JVM CPU Time,2,"\cite{thamsen_continuously_2016}, \cite{kros_pertract_2019}",
+Workflow Structure (Spark DAG),12,"\cite{aseman-manzar_cost-aware_2022}, \cite{ataie_combined_2016}, \cite{karimian-aliabadi_analytical_2019}, \cite{gianniti_fluid_2017}, \cite{thamsen_continuously_2016}, \cite{krob_model-based_2017}, \cite{ardagna_performance_2018}, \cite{gulino_performance_2020}, \cite{xu_ispot_2017}, \cite{rizzi_support_2016}, \cite{hu_balance_2020}",
+number of bytes transferred during shuﬄes,1,\cite{rizzi_support_2016},
+Running Tasks,5,"\cite{karimian-aliabadi_fixed-point_2023}, \cite{ardagna_performance_2018}, \cite{ataie_combined_2016}, \cite{liu_estimation_2016}",Big Data Framework Layer
+Progress of running of Tasks,1,\cite{liu_estimation_2016},
+Task Timestamps,1,\cite{liu_estimation_2016},
+Number of Runs (Historical),1,\cite{thamsen_ellis_2017},
+Ressource Utilisation Data,3,"\cite{islam_dspark_2017}, \cite{thamsen_ellis_2017}, \cite{shen_novel_2023}",
+Stage Execution Time,2,"\cite{thamsen_ellis_2017}, \cite{sewal_machine_2022}",
+Number of Tasks,9,"\cite{ramanathan_towards_2019}, \cite{gianniti_fluid_2017}, \cite{li_marvelscaler_2022}, \cite{sewal_machine_2022}, \cite{maros_machine_2019}, \cite{chalvantzis_bbq_2017}, \cite{xu_cost-effective_2019}, \cite{ataie_hybrid_2022}",Big Data Framework Layer
+Number of Job Stages,4,"\cite{chalvantzis_bbq_2017}, \cite{aseman-manzar_cost-aware_2022}, \cite{glushkova_mapreduce_2019}, \cite{xu_cost-effective_2019}",Big Data Framework Layer
+CPU Utilisation - Overall,4,"\cite{ye_performance_2017}, \cite{scheinert_enel_2021}, \cite{shen_novel_2023}, \cite{zaouk_neural-based_2021}",
+Disk Read Speed,3,"\cite{alipourfard_cherrypick_nodate}, \cite{ye_performance_2017}, \cite{peyravi_estimating_2020}",
+Disk Write Speed,3,"\cite{alipourfard_cherrypick_nodate}, \cite{ye_performance_2017}, \cite{peyravi_estimating_2020}",
+Memory Size per Node,6,"\cite{ye_machine_2020}, \cite{ye_performance_2017}, \cite{myung_performance_2020}, \cite{li_sparks_2018}, \cite{li_marvelscaler_2022}, \cite{shao_collaborative_2017}",Hardware Layer
+Docker Configuration,1,\cite{ye_performance_2017},Virtualisation Layer
+resource interference,1,\cite{ye_performance_2017},
+Data (de)serialization time,1,\cite{xu_ispot_2017},
+Garbage collection time,4,"\cite{xu_ispot_2017}, \cite{scheinert_enel_2021}, \cite{ataie_combined_2016}, \cite{xu_cost-effective_2019}",
+Disk bandwidth,1,\cite{xu_ispot_2017},
+Data processing ratio,2,"\cite{xu_ispot_2017}, \cite{maros_machine_2019}",
+data localization ratio,1,\cite{xu_ispot_2017},
+Data Processing Rate,1,\cite{xu_ispot_2017},
+Parallelism factor,1,\cite{xu_ispot_2017},Big Data Framework Layer
+Available Network Bandwidth,4,"\cite{xu_ispot_2017}, \cite{peyravi_estimating_2020}, \cite{kros_pertract_2019}, \cite{ahmed_parallelization_2021}",
+Slot Memory,1,\cite{shao_collaborative_2017},
+CPU Cores per Slot,3,"\cite{shao_collaborative_2017}, \cite{amannejad_fast_2019}",Big Data Framework Layer
+number of partitions,3,"\cite{shao_collaborative_2017}, \cite{amannejad_fast_2019}",
+Completed Stages,4,"\cite{shao_collaborative_2017}, \cite{maros_machine_2019}, \cite{ardagna_performance_2018}, \cite{ataie_combined_2016}",
+Data Chunks Size,2,"\cite{ramanathan_towards_2019}, \cite{krob_model-based_2017}",Big Data Framework Layer
+Completed Tasks,4,"\cite{ardagna_performance_2018}, \cite{ataie_combined_2016}, \cite{karimian-aliabadi_fixed-point_2023}",Big Data Framework Layer
+Number of Cloud Instances,3,"\cite{alipourfard_cherrypick_nodate}, \cite{cheng_tuning_2021}, \cite{xu_cost-effective_2019}",Virtualisation Layer
+CPU Processing Power,3,"\cite{alipourfard_cherrypick_nodate}, \cite{li_marvelscaler_2022}, \cite{peyravi_estimating_2020}",Hardware Layer
+Number of Disks,1,\cite{alipourfard_cherrypick_nodate},Hardware Layer
+Network bandwidth,1,\cite{alipourfard_cherrypick_nodate},
+RAM per Core,1,\cite{alipourfard_cherrypick_nodate},Hardware Layer
+Price per Hour,2,"\cite{alipourfard_cherrypick_nodate}, \cite{xu_cost-effective_2019}",Virtualisation Layer
+Job queue,1,\cite{wang_mapreduce_2018},
+Task CPU Requirement,1,\cite{wang_mapreduce_2018},
+Node Manager CPU Idle,1,\cite{wang_mapreduce_2018},
+Node Manager Memory Idle,1,\cite{wang_mapreduce_2018},
+Node Manager CPU Time,1,\cite{wang_mapreduce_2018},
+Node Manager Memory,1,\cite{wang_mapreduce_2018},
+Local Map Tasks Count of a Job,1,\cite{wang_mapreduce_2018},
+Job Priority User Specified,1,\cite{wang_mapreduce_2018},
+Job Data Size,2,"\cite{ataie_hybrid_2022}, \cite{wang_mapreduce_2018}",
+Job Dynamic Priority,1,\cite{wang_mapreduce_2018},
+Task Execution Time,7,"\cite{gandomi_designing_2020}, \cite{shen_novel_2023}, \cite{li_sparks_2018}, \cite{glushkova_mapreduce_2019}, \cite{li_marvelscaler_2022}, \cite{sewal_machine_2022}, \cite{ahmed_parallelization_2021}",
+hardware speciﬁcations / machine name,2,"\cite{ramanathan_towards_2019}, \cite{scheinert_enel_2021}",
+Cloud Machine Type,2,"\cite{cheng_tuning_2021}, \cite{xu_cost-effective_2019}",Virtualisation Layer
+CPU Utilisation - Providing Infrastructure,1,\cite{kros_pertract_2019},
+Network latency,1,\cite{kros_pertract_2019},
+CPU Utilisation - (de)serialization time,1,\cite{kros_pertract_2019},
+Number of Disk per Node,1,\cite{glushkova_mapreduce_2019},
+Processing Latency,2,"\cite{glushkova_mapreduce_2019}, \cite{zaouk_neural-based_2021}",(Historical) Performance Layer
+RAM Write Speed,1,\cite{peyravi_estimating_2020},
+RAM Read Speed,1,\cite{peyravi_estimating_2020},
+Task success rate,2,"\cite{li_marvelscaler_2022}, \cite{maros_machine_2019}",
+Data Output Size,1,\cite{gandomi_designing_2020},Data Layer
+System Level Metrics,1,\cite{li_cross-domain_2020},
+VM Config,1,\cite{li_cross-domain_2020},
+Task Scheduler Delay,1,\cite{ataie_combined_2016},Big Data Framework Layer
+Shuffle R/W,3,"\cite{ye_machine_2020}, \cite{scheinert_enel_2021}, \cite{ataie_combined_2016}",
+Input Data Profile,1,\cite{gulino_performance_2020},
+"""Node Type (Master",1,\cite{scheinert_bellamy_2021},
+"Slave)""",1,\cite{scheinert_bellamy_2021},
+Target dataset characteristics,1,\cite{scheinert_bellamy_2021},
+Data I/O,1,\cite{scheinert_enel_2021},
+Ratio of memory spilled to disk to peak execution memory,1,\cite{scheinert_enel_2021},
+Job Configuration,1,\cite{zaouk_neural-based_2021},
+Spark Time Metrics,1,\cite{zaouk_neural-based_2021},
+Network usage,1,\cite{zaouk_neural-based_2021},(Historical) Performance Layer
+I/O Usage,1,\cite{zaouk_neural-based_2021},
+I/O Time,1,\cite{ahmed_parallelization_2021},
+Size of elements,1,\cite{myung_machine-learning_2021},
+Input Data,1,\cite{jie_performance_2022},
+Type of the storage medium,1,\cite{li_marvelscaler_2022},
+Spark History Logs,1,\cite{shen_novel_2023},
+Memory Utilisation,1,\cite{shen_novel_2023},
+Job Status,1,\cite{shen_novel_2023},
