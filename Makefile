@@ -9,7 +9,7 @@ deploy:
 destroy:
 	@cd deployment && terraform destroy
 
-output-details:
+output:
 	@cd deployment && terraform output hdinsight_cluster_details
 
 destroy-force:
@@ -19,10 +19,22 @@ destroy-force:
 	done
 	rm -f deployment/terraform.tfstate*
 
+4:
+	az hdinsight resize --resource-group AlexGuttenberger_Thesis  --name hadoopcluster12312BerlinABC --workernode-count 4
+	@cd hibench && bash create-inventory.sh
+
+8:
+	az hdinsight resize --resource-group AlexGuttenberger_Thesis  --name hadoopcluster12312BerlinABC --workernode-count 8
+	@cd hibench && bash create-inventory.sh
+
+12:
+	az hdinsight resize --resource-group AlexGuttenberger_Thesis  --name hadoopcluster12312BerlinABC --workernode-count 12
+	@cd hibench && bash create-inventory.sh
+
 # ANSIBLE COMMANDS
 
 submit:
-	ansible-playbook -i hibench/hosts.ini hibench/main.yml
+	ansible-playbook hibench/main.yml
 
 setup:
 	ansible-playbook -i hibench/hosts.ini hibench/setup-hibench.yml
