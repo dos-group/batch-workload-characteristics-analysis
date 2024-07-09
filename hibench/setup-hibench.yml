@@ -22,16 +22,7 @@
     - name: Install basic tools
       apt:
         name:
-          - build-essential
-          - software-properties-common
-          - git
-          - tar
-          - wget
-          - curl
-          - man
           - unzip
-          - vim-tiny
-          - bc
         update_cache: yes
         state: present
 
