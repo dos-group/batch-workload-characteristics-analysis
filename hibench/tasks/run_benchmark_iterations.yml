@@ -1,0 +1,9 @@
+- name: Run each benchmark iteration {{ iteration }}
+  include_tasks: tasks/run_benchmark.yml
+  loop: "{{ benchmarks }}"
+  loop_control:
+    loop_var: benchmark
+  vars:
+    benchmark_name: "{{ benchmark.name }}"
+    prepare_script: "{{ benchmark.prepare_script }}"
+    run_script: "{{ benchmark.run_script }}"

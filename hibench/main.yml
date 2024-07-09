@@ -7,26 +7,93 @@
     monitoring_interval: 5  # Interval in seconds between samples
     tmux_sar_session: "sar_monitoring"
     delay_between_benchmarks: 1  # Delay in minutes between each benchmark run
+    hibench_data_size: small
+    iterations: 10  # Number of times to run the benchmarks
+    subfolder_name: small
 
     # Define the benchmarks with their respective prepare and run scripts
     benchmarks:
-      - name: wordcount
-        prepare_script: "{{ hibench_home }}/bin/workloads/micro/wordcount/prepare/prepare.sh"
-        run_script: "{{ hibench_home }}/bin/workloads/micro/wordcount/hadoop/run.sh"
-      - name: sort
-        prepare_script: "{{ hibench_home }}/bin/workloads/micro/sort/prepare/prepare.sh"
-        run_script: "{{ hibench_home }}/bin/workloads/micro/sort/hadoop/run.sh"
-      - name: SQL-join
-        prepare_script: "{{ hibench_home }}/bin/workloads/sql/join/prepare/prepare.sh"
-        run_script: "{{ hibench_home }}/bin/workloads/sql/join/hadoop/run.sh"
-      - name: PageRank
+      # Micro Benchmarks
+      # - name: sort
+      #   prepare_script: "{{ hibench_home }}/bin/workloads/micro/sort/prepare/prepare.sh"
+      #   run_script: "{{ hibench_home }}/bin/workloads/micro/sort/hadoop/run.sh"
+      # - name: wordcount
+      #   prepare_script: "{{ hibench_home }}/bin/workloads/micro/wordcount/prepare/prepare.sh"
+      #   run_script: "{{ hibench_home }}/bin/workloads/micro/wordcount/hadoop/run.sh"
+      # # # - name: repartition
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/micro/repartition/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/micro/repartition/spark/run.sh"
+      # # # - name: sleep
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/micro/sleep/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/micro/sleep/hadoop/run.sh"
+      - name: terasort
+        prepare_script: "{{ hibench_home }}/bin/workloads/micro/terasort/prepare/prepare.sh"
+        run_script: "{{ hibench_home }}/bin/workloads/micro/terasort/hadoop/run.sh"
+      - name: dfsioe
+        prepare_script: "{{ hibench_home }}/bin/workloads/micro/dfsioe/prepare/prepare.sh"
+        run_script: "{{ hibench_home }}/bin/workloads/micro/dfsioe/hadoop/run.sh"
+        
+      # #Machine Learning
+      # - name: bayes
+      #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/bayes/prepare/prepare.sh"
+      #   run_script: "{{ hibench_home }}/bin/workloads/ml/bayes/hadoop/run.sh"
+      - name: kmeans
+        prepare_script: "{{ hibench_home }}/bin/workloads/ml/kmeans/prepare/prepare.sh"
+        run_script: "{{ hibench_home }}/bin/workloads/ml/kmeans/hadoop/run.sh"
+      # # # - name: gmm
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/gmm/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/gmm/spark/run.sh"
+      # # # - name: lr
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/lr/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/lr/spark/run.sh"
+      # # # - name: als
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/als/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/als/spark/run.sh"
+      # # # - name: gbt
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/gbt/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/gbt/spark/run.sh"
+      # # # - name: linear
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/linear/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/linear/spark/run.sh"
+      # # # - name: lda
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/lda/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/lda/spark/run.sh"
+      # # # - name: pca
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/pca/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/pca/spark/run.sh"
+      # # # - name: rf
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/rf/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/rf/spark/run.sh"
+      # # # - name: svm
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/svm/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/svm/spark/run.sh"
+      # # # - name: svd
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/ml/svd/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/ml/svd/spark/run.sh"
+
+      # # SQL Benchmarks
+      # # # - name: sql-scan
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/sql/scan/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/sql/scan/hadoop/run.sh"
+      # - name: sql-join
+      #   prepare_script: "{{ hibench_home }}/bin/workloads/sql/join/prepare/prepare.sh"
+      #   run_script: "{{ hibench_home }}/bin/workloads/sql/join/hadoop/run.sh"
+      # # # - name: sql-aggregation
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/sql/aggregation/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/sql/aggregation/hadoop/run.sh"
+
+      # # Websearch Benchmarks
+      - name: pagerank
         prepare_script: "{{ hibench_home }}/bin/workloads/websearch/pagerank/prepare/prepare.sh"
         run_script: "{{ hibench_home }}/bin/workloads/websearch/pagerank/hadoop/run.sh"
+      # # # - name: nutchindexing
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/websearch/nutchindexing/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/websearch/nutchindexing/hadoop/run.sh"
 
-  pre_tasks:
-    - name: Set the timestamp for the result directory
-      set_fact:
-        local_results_dir: "results/data/{{ lookup('pipe', \"date +'%Y-%m-%d_%H-%M'\") }}"
+      # # # Graph Benchmark
+      # # # - name: nweight
+      # # #   prepare_script: "{{ hibench_home }}/bin/workloads/graph/nweight/prepare/prepare.sh"
+      # # #   run_script: "{{ hibench_home }}/bin/workloads/graph/nweight/hadoop/run.sh"
 
   tasks:
     # Include common tasks such as installing prerequisites
@@ -35,13 +102,11 @@
     # Include tasks to configure HiBench before running benchmarks
     - include_tasks: tasks/push_hibench_configs.yml
 
-    # Loop over benchmarks and include benchmark tasks
-    - name: Run each benchmark
-      include_tasks: tasks/run_benchmark.yml
-      loop: "{{ benchmarks }}"
+    # Loop over the number of iterations
+    - name: Start iterating benchmarks
+      include_tasks: tasks/run_benchmark_iterations.yml
+      loop: "{{ range(8, iterations + 1) | list }}"
       loop_control:
-        loop_var: benchmark
+        loop_var: iteration
       vars:
-        benchmark_name: "{{ benchmark.name }}"
-        prepare_script: "{{ benchmark.prepare_script }}"
-        run_script: "{{ benchmark.run_script }}"
+        local_results_dir: "results/data/{{subfolder_name}}/iteration_{{iteration}}"
