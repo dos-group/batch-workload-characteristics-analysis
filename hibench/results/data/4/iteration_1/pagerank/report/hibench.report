@@ -1,0 +1,2 @@
+Type         Date       Time     Input_data_size      Duration(s)          Throughput(bytes/s)  Throughput/node     
+HadoopPagerank 2024-07-05 22:45:35 259890534            1228.303             211585               211585              

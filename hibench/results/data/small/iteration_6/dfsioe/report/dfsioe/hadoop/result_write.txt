@@ -1,0 +1,19 @@
+----- TestDFSIO ----- : write
+           Date & time: Tue Jul 09 06:44:53 UTC 2024
+       Number of files: 32
+Total MBytes processed: 320
+     Throughput mb/sec: 0.9291548465587879
+Average IO rate mb/sec: 1.0115376710891724
+ IO rate std deviation: 0.511230390226678
+    Test exec time sec: 136.258
+
+-- Extended Metrics --   : write
+Result file name         : /root/HiBench/report/dfsioe/hadoop/conf/../throughput_write.csv
+Sampling overhead        : 0.11178894%
+Reference Start Time     : 1720507356448
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,2,3,3,3,3,3,2,2,1,1,0,0,1,2,6,8,9,13,14,18,22,23,22,24,23,17,15,9,8,5,2,1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0
+Average of Aggregated Throughput : 16.818880146667244 mb/sec
+              Standard Deviation : 9.926002775160509 mb/sec
+   Time spots Counted in Average : ........................................................................................................11111111111111.................... 
+
+-- Result Analyse -- : 82s

@@ -1,0 +1,4 @@
+# hostname;interval;timestamp;tps;rtps;wtps;bread/s;bwrtn/s
+hn0-hadoop;5;2024-07-08 15:10:21 UTC;7.80;0.00;7.80;0.00;108.80
+hn0-hadoop;5;2024-07-08 15:10:26 UTC;2.20;0.00;2.20;0.00;100.80
+hn0-hadoop;5;2024-07-08 15:10:31 UTC;2.60;0.20;2.40;1.60;27.20
