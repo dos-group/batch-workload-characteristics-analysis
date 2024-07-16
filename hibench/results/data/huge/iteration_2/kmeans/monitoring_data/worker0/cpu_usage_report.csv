@@ -1,0 +1,2 @@
+# hostname;interval;timestamp;CPU;%user;%nice;%system;%iowait;%steal;%idle
+hn0-hadoop;5;2024-07-12 22:57:50 UTC;-1;7.87;0.00;7.30;0.10;0.00;84.72

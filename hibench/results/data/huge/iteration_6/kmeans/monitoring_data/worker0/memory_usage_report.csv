@@ -1,0 +1,2 @@
+# hostname;interval;timestamp;kbmemfree;kbavail;kbmemused;%memused;kbbuffers;kbcached;kbcommit;%commit;kbactive;kbinact;kbdirty
+hn0-hadoop;5;2024-07-14 10:51:01 UTC;1310988;1796312;6825544;83.89;50828;669552;12842972;82.98;4966324;1417116;2544

@@ -1,0 +1,2 @@
+Type         Date       Time     Input_data_size      Duration(s)          Throughput(bytes/s)  Throughput/node     
+HadoopTerasort 2024-07-14 16:08:32 6400000000           1490.260             4294552              4294552             

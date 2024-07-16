@@ -1,0 +1,3 @@
+# hostname;interval;timestamp;IFACE;rxpck/s;txpck/s;rxkB/s;txkB/s;rxcmp/s;txcmp/s;rxmcst/s;%ifutil
+hn0-hadoop;5;2024-07-14 10:51:01 UTC;lo;24.20;24.20;25.72;25.72;0.00;0.00;0.00;0.00
+hn0-hadoop;5;2024-07-14 10:51:01 UTC;eth0;131.80;115.80;85.39;35.90;0.00;0.00;0.00;0.00

@@ -1,0 +1,2 @@
+Type         Date       Time     Input_data_size      Duration(s)          Throughput(bytes/s)  Throughput/node     
+HadoopDfsioe-write 2024-07-14 01:27:57 26998591923          5515.722             4894842              4894842             
