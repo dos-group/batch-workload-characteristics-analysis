@@ -7,9 +7,9 @@
     monitoring_interval: 5  # Interval in seconds between samples
     tmux_sar_session: "sar_monitoring"
     delay_between_benchmarks: 1  # Delay in minutes between each benchmark run
-    hibench_data_size: small
+    hibench_data_size: large
     iterations: 10  # Number of times to run the benchmarks
-    subfolder_name: small
+    subfolder_name: baseline
 
     # Define the benchmarks with their respective prepare and run scripts
     benchmarks:
@@ -105,7 +105,7 @@
     # Loop over the number of iterations
     - name: Start iterating benchmarks
       include_tasks: tasks/run_benchmark_iterations.yml
-      loop: "{{ range(8, iterations + 1) | list }}"
+      loop: "{{ range(1, iterations + 1) | list }}"
       loop_control:
         loop_var: iteration
       vars:
