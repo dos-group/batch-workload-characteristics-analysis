@@ -52,15 +52,19 @@ resource "azurerm_hdinsight_hadoop_cluster" "similarity_exp_hadoop_cluster" {
   # location            = azurerm_resource_group.similarity_exp_rg.location
   resource_group_name = data.azurerm_resource_group.similarity_exp_rg.name
   location            = data.azurerm_resource_group.similarity_exp_rg.location
-  ## Region abhängig
-  # cluster_version     = "5.0" # HDI cluster version -> 3.3.4
-  cluster_version     = "4.0" # HDI cluster version -> 3.1.0
-  # cluster_version     = "3.6"
   tier                = "Standard"
 
+  # HDInsight 4.0 cluster configuration
+  cluster_version     = "4.0" 
   component_version {
     hadoop = "3.1"
   }
+
+  # HDInsight 5.1 cluster configuration
+  # cluster_version     = "5.1"
+  # component_version {
+  #   hadoop = "3.3"
+  # }
 
   # Gateway configuration for the cluster
   gateway {
