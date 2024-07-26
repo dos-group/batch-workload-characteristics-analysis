@@ -19,6 +19,8 @@ destroy-force:
 	done
 	rm -f deployment/terraform.tfstate*
 
+# Resize the cluster
+
 4:
 	az hdinsight resize --resource-group AlexGuttenberger_Thesis  --name hadoopcluster12312BerlinABC --workernode-count 4
 	@cd hibench && bash create-inventory.sh
