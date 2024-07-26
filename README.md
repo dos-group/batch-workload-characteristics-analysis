@@ -60,7 +60,7 @@ To destroy the cluster and clean up resources, use:
 - `4`: Resize the HDInsight cluster to 4 worker nodes.
 - `8`: Resize the HDInsight cluster to 8 worker nodes.
 - `12`: Resize the HDInsight cluster to 12 worker nodes.
-- `submit`: Run a MapReduce job using Docker in the cluster.
+- `submit`: Run a MapReduce job in the cluster.
 - `setup`: Setup HiBench environment using Ansible.
 - `ping`: Ping all nodes in the HiBench inventory.
 - `ssh`: Establish an SSH connection to the endpoint.
