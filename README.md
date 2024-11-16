@@ -1,4 +1,7 @@
 # Evaluation of Batch Workload Characterization Techniques for Performance Modeling of Distributed Data Processing Systems
+
+**Note**: This repository is a fork of the [original repository](https://github.com/guttenberger/Masterthesis) for reasons of archiving.
+
 This repository contains all materials and code related to my master's thesis, which focuses on workload similarity evaluation from big data processing platforms such as Apache Hadoop or Apache Spark. It uses Docker, Ansible and Terraform to ensure a consistent and reproducible development environment.
 
 ## Key Components
